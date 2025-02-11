@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collaborative Merge Button</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .approve-button {
+      background-color: #3498db;
+    }
+    .approve-button:disabled {
+      background-color: #2ecc71;
+      cursor: not-allowed;
+    }
+    .merge-button {
+      background-color: #9b59b6;
+    }
+    .merge-button:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Collaborative Merge Request</h1>
+  <div id="buttons">
+    <button class="button approve-button" onclick="approve(0)">Approve as User 1</button>
+    <button class="button approve-button" onclick="approve(1)">Approve as User 2</button>
+    <button class="button approve-button" onclick="approve(2)">Approve as User 3</button>
+    <button class="button approve-button" onclick="approve(3)">Approve as User 4</button>
+  </div>
+  <button id="mergeButton" class="button merge-button" disabled>Waiting for Approvals</button>
+
+  <script>
+    const approvals = [false, false, false, false];
+
+    function approve(index) {
+      approvals[index] = true;
+      const buttons = document.querySelectorAll('.approve-button');
+      buttons[index].textContent = `User ${index + 1} Approved`;
+      buttons[index].disabled = true;
+
+      if (approvals.every(approved => approved)) {
+        const mergeButton = document.getElementById('mergeButton');
+        mergeButton.disabled = false;
+        mergeButton.textContent = 'Merge Request';
+      }
+    }
+  </script>
+</body>
+</html>
